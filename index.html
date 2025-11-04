@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mangkok & Cerita – Katalog Produk</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ==========================
+       HEADER & NAVBAR
+  =========================== -->
+  <header>
+    <h1>Mangkok & Cerita</h1>
+    <nav>
+      <a href="checkout.html" class="nav-icon">
+  <img src="https://cdn-icons-png.flaticon.com/128/526/526737.png" alt="Keranjang" width="22" height="22">
+  Keranjang
+</a>
+
+      <a href="komunitas.html" class="nav-icon">
+  <img src="https://cdn-icons-png.flaticon.com/128/9710/9710503.png" alt="Komunitas" width="22" height="22">
+  Komunitas
+</a>
+
+    </nav>
+  </header>
+
+  <!-- ==========================
+       HERO SECTION
+  =========================== -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Makanan yang Menemani dan Menghadirkan Cerita 🍲</h1>
+      <p>
+        Setiap mangkok bukan hanya tentang rasa, tapi tentang kenangan.
+        Kami menghadirkan cita rasa hangat, nyaman, dan akrab — teman setia bagi mahasiswa rantau,
+        pekerja muda, atau siapa pun yang rindu makanan dengan cerita.
+      </p>
+      <div class="hero-buttons">
+        <button onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' })">
+          Jelajahi Cerita Kami
+        </button>
+        <button class="secondary-btn" onclick="document.getElementById('product-list').scrollIntoView({ behavior: 'smooth' })">
+          Lihat Katalog Produk
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================
+       ABOUT SECTION
+  =========================== -->
+  <section id="about" class="about">
+    <div class="about-content">
+      <h2>Tentang Kami</h2>
+      <p>
+        “Mangkok & Cerita” lahir dari ide sederhana bahwa makanan bisa lebih dari sekadar kebutuhan.
+        Kami ingin setiap pelanggan merasakan kehangatan, cerita, dan koneksi di setiap suapan.
+      </p>
+      <p>
+        Kami percaya setiap rasa membawa cerita—tentang perjuangan, tawa, bahkan rindu.
+        Itulah mengapa kami selalu menyajikan menu dengan hati, dari bahan segar hingga kemasan yang penuh pesan positif.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==========================
+       VALUE SECTION
+  =========================== -->
+  <section class="value">
+    <h2>Kenapa Pilih Kami?</h2>
+    <div class="value-grid">
+      <div class="value-card">
+        <img src="https://img.icons8.com/color/96/000000/ingredients.png" alt="Bahan Segar" />
+        <h3>Bahan Segar</h3>
+        <p>Semua menu dibuat dari bahan berkualitas yang diproses higienis setiap hari.</p>
+      </div>
+      <div class="value-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/857/857681.png" alt="Praktis" />
+        <h3>Praktis & Cepat</h3>
+        <p>Hidangan siap santap untuk kamu yang sibuk kuliah, kerja, atau sekadar butuh teman makan cepat.</p>
+      </div>
+      <div class="value-card">
+        <img src="https://img.icons8.com/color/96/000000/storytelling.png" alt="Cerita" />
+        <h3>Setiap Mangkok Ada Cerita</h3>
+        <p>Kemasan kami membawa pesan positif agar setiap pelanggan makan dengan senyum.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================
+       TESTIMONI SECTION
+  =========================== -->
+ <section class="testimonial">
+  <h2>Apa Kata Mereka?</h2>
+  <div class="testimonial-slider">
+    <div class="slides">
+      <div class="testimonial-card">
+        <p>“Rasa ayam teriyakinya ngingetin aku sama masakan rumah. Packaging-nya juga niat banget.”</p>
+        <strong>— Dita, Mahasiswa Rantau</strong>
+      </div>
+      <div class="testimonial-card">
+        <p>“Harga bersahabat, tapi rasa kaya resto. Recommended buat anak kos yang pengen makan enak!”</p>
+        <strong>— Rangga, Pekerja Muda</strong>
+      </div>
+      <div class="testimonial-card">
+        <p>“Kopinya enak, snack-nya gurih, dan timnya ramah banget waktu Market Day di kampus!”</p>
+        <strong>— Salsabila, Karyawan Rantau</strong>
+      </div>
+      <div class="testimonial-card">
+        <p>“Portion-nya pas, rasanya konsisten tiap pesen. Favorit gue banget!”</p>
+        <strong>— Aldi, Mahasiswa Rantau</strong>
+      </div>
+      <div class="testimonial-card">
+        <p>“Suka banget sama vibes dan branding-nya, terasa homey tapi profesional jadi kangen lampung.”</p>
+        <strong>— Guspe, Anak Kos</strong>
+      </div>
+      <div class="testimonial-card">
+        <p>“Semuanya fresh dan packaging-nya lucu. Gak nyangka dari anak rantau!”</p>
+        <strong>— kiki, Mahasiswa</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+   <!-- ==========================
+       BANNER PROMO
+  =========================== -->
+<section class="promo-slider">
+  <button class="nav prev" onclick="moveSlide(-1)">&#10094;</button>
+  <div class="slides">
+    <img src="https://uploads.onecompiler.io/42vbn3cw5/443k22ept/WhatsApp%20Image%202025-11-03%20at%2021.51.30_afad8d24.jpg" alt="Promo 1">
+    <img src="https://uploads.onecompiler.io/42vbn3cw5/443k22ept/WhatsApp%20Image%202025-11-03%20at%2021.51.43_0da8bfbb.jpg" alt="Promo 2">
+    <img src="https://uploads.onecompiler.io/42vbn3cw5/443k22ept/WhatsApp%20Image%202025-11-03%20at%2021.51.19_abe505af.jpg" alt="Promo 3">
+    
+  </div>
+
+
+    <button class="nav next" onclick="moveSlide(1)">&#10095;</button>
+</section>
+
+
+  <!-- ==========================
+       KATALOG PRODUK
+  =========================== -->
+  <section id="katalog" class="catalogue-section">
+    <h2>Katalog Produk</h2>
+    <main class="container" id="product-list">
+      <div class="product-card">
+        <img src="https://i.pinimg.com/1200x/a3/83/b2/a383b21f877213b403e307ff5ac3d102.jpg" alt="RiceBowl Cumi" />
+        <h3>RiceBowl Cumi</h3>
+        <p>Rp 15.000</p>
+        <button onclick="addToCart('RiceBowl Cumi', 15000)">Tambah ke Keranjang</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://i.pinimg.com/736x/1a/2d/ef/1a2defa61f585b67b97a902a42e4e3c0.jpg" alt="RiceBowl Chicken" />
+        <h3>RiceBowl Chicken</h3>
+        <p>Rp 15.000</p>
+        <button onclick="addToCart('RiceBowl Chicken', 15000)">Tambah ke Keranjang</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://i.pinimg.com/736x/9a/17/be/9a17be400d3c37118f73c71ea4b8e42b.jpg" alt="RiceBowl Daging" />
+        <h3>RiceBowl Teriyaki</h3>
+        <p>Rp 15.000</p>
+        <button onclick="addToCart('RiceBowl Teriyaki', 15000)">Tambah ke Keranjang</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://i.pinimg.com/736x/1a/2d/ef/1a2defa61f585b67b97a902a42e4e3c0.jpg" alt="RiceBowl Udang" />
+        <h3>RiceBowl Udang</h3>
+        <p>Rp 15.000</p>
+        <button onclick="addToCart('RiceBowl Udang', 15000)">Tambah ke Keranjang</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://i.pinimg.com/736x/0f/de/75/0fde75dcdcf92050ebca1f896db5db1f.jpg" alt="Milo" />
+        <h3>Milo</h3>
+        <p>Rp 8.000</p>
+        <button onclick="addToCart('Milo', 8000)">Tambah ke Keranjang</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://i.pinimg.com/736x/85/ca/a7/85caa796e00f8eccc334c6cdd835e578.jpg" alt="Kopi" />
+        <h3>Teh Tarik</h3>
+        <p>Rp 7.000</p>
+        <button onclick="addToCart('Teh Tarik', 7000)">Tambah ke Keranjang</button>
+      </div>
+
+         <div class="product-card">
+        <img src="https://uploads.onecompiler.io/42vbn3cw5/443myvsf5/gambar%20cookies.jpg" alt="Cookies" />
+        <h3>Cookies</h3>
+        <p>Rp 5.000</p>
+        <button onclick="addToCart('Cookies', 5000)">Tambah ke Keranjang</button>
+      </div>
+
+         <div class="product-card">
+        <img src="https://img.freepik.com/free-photo/iced-coffee-cup_144627-32955.jpg" alt="Bundle RiceBowl + Milo" />
+        <h3>Bundle RiceBowl + Milo</h3>
+        <p>Rp 20.000</p>
+        <button onclick="addToCart('Bundle RiceBowl + Milo', 20000)">Tambah ke Keranjang</button>
+      </div>
+
+         <div class="product-card">
+        <img src="https://img.freepik.com/free-photo/iced-coffee-cup_144627-32955.jpg" alt="Bundle Cookies + Milo" />
+        <h3>Bundle Cookies + Milo</h3>
+        <p>Rp 10.000</p>
+        <button onclick="addToCart('Bundle Cookies + Miloies', 10000)">Tambah ke Keranjang</button>
+      </div>
+
+    </main>
+  </section>
+  
+
+  <!-- ==========================
+       SCRIPT LOGIKA KERANJANG
+  =========================== -->
+  <script>
+    function addToCart(name, price) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const existing = cart.find(item => item.name === name);
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ name, price: Number(price), qty: 1 });
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${name} ditambahkan ke keranjang!`);
+    }
+  </script>
+</body>
+</html>
+
+<script src="script.js"></script>

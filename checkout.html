@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout Pembayaran</title>
+
+  <!-- ✅ Import CSS utama -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ✅ Styling tambahan khusus halaman checkout -->
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1em;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    button {
+      cursor: pointer;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+    }
+    .btn-plus { background-color: #2ecc71; color: white; }
+    .btn-minus { background-color: #f39c12; color: white; }
+    .btn-delete { background-color: #e74c3c; color: white; }
+    .btn-reset { background-color: #c0392b; color: white; margin-top: 10px; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Checkout Pembayaran</h1>
+    <nav>
+      <a href="index.html">← Kembali</a>
+    </nav>
+  </header>
+
+  <main class="checkout-container">
+    <section class="checkout-box">
+      <h2>Keranjang Belanja</h2>
+
+      <table id="cartTable">
+        <thead>
+          <tr>
+            <th>Produk</th>
+            <th>Qty</th>
+            <th>Harga Satuan</th>
+            <th>Subtotal</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <h3 id="totalPrice"></h3>
+      <button id="resetCartBtn" class="btn-reset">Reset Keranjang</button>
+
+      <hr>
+      <h2>Silakan Scan QRIS untuk Melanjutkan Pembayaran</h2>
+      <img
+        src="https://uploads.onecompiler.io/42vbn3cw5/443myvsf5/QRIS%20MNC.jpg"
+        alt="QRIS"
+        class="qris-image"
+      />
+      <p class="payment-info">
+        Total pembayaran akan muncul otomatis saat scan QR code.
+      </p>
+
+      <button id="sendProofBtn" class="back-btn">Kirim Bukti Bayar</button>
+    </section>
+  </main>
+
+  <script>
+    const adminNumber = "62895365527136";
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const tbody = document.querySelector("#cartTable tbody");
+    const totalPrice = document.getElementById("totalPrice");
+
+    function renderCart() {
+      tbody.innerHTML = "";
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const price = Number(item.price);
+        const subtotal = price * item.qty;
+        total += subtotal;
+
+        const row = `
+          <tr>
+            <td>${item.name}</td>
+            <td>
+              <button class="btn-minus" onclick="decreaseQty(${index})">-</button>
+              ${item.qty}
+              <button class="btn-plus" onclick="increaseQty(${index})">+</button>
+            </td>
+            <td>Rp ${price.toLocaleString("id-ID")}</td>
+            <td>Rp ${subtotal.toLocaleString("id-ID")}</td>
+            <td><button class="btn-delete" onclick="removeItem(${index})">Hapus</button></td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+
+      totalPrice.textContent = `Total Pembayaran: Rp ${total.toLocaleString("id-ID")}`;
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    function increaseQty(index) {
+      cart[index].qty += 1;
+      renderCart();
+    }
+
+    function decreaseQty(index) {
+      if (cart[index].qty > 1) {
+        cart[index].qty -= 1;
+      } else {
+        removeItem(index);
+      }
+      renderCart();
+    }
+
+    function removeItem(index) {
+      if (confirm(`Hapus ${cart[index].name} dari keranjang?`)) {
+        cart.splice(index, 1);
+        renderCart();
+      }
+    }
+
+    document.getElementById("resetCartBtn").addEventListener("click", () => {
+      if (confirm("Yakin mau hapus semua isi keranjang?")) {
+        cart = [];
+        localStorage.removeItem("cart");
+        renderCart();
+      }
+    });
+
+    document.getElementById("sendProofBtn").addEventListener("click", () => {
+      if (cart.length === 0) {
+        alert("Keranjang kosong!");
+        return;
+      }
+
+      const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+      const listItems = cart.map(i => `${i.name} x${i.qty}`).join(", ");
+      const message = `Halo cal, saya sudah melakukan pembayaran sebesar *Rp ${total.toLocaleString("id-ID")}* untuk pesanan: ${listItems}.`;
+      const waLink = `https://wa.me/${adminNumber}?text=${encodeURIComponent(message)}`;
+      window.open(waLink, "_blank");
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>
