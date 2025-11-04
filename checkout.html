@@ -149,7 +149,7 @@
 
       const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
       const listItems = cart.map(i => `${i.name} x${i.qty}`).join(", ");
-      const message = `Halo cal, saya sudah melakukan pembayaran sebesar *Rp ${total.toLocaleString("id-ID")}* untuk pesanan: ${listItems}.`;
+      const message = `Halo kak, saya sudah melakukan pembayaran sebesar *Rp ${total.toLocaleString("id-ID")}* untuk pesanan: ${listItems}.`;
       const waLink = `https://wa.me/${adminNumber}?text=${encodeURIComponent(message)}`;
       window.open(waLink, "_blank");
     });
