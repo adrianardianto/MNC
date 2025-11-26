@@ -6,13 +6,11 @@
   <title>Komunitas</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* tambahan kecil buat gaya forum */
     .forum-container {
       max-width: 800px;
       margin: 2rem auto;
       padding: 1rem;
     }
-
     .post-form {
       background: #fff;
       padding: 1rem;
@@ -20,7 +18,6 @@
       box-shadow: 0 3px 10px rgba(0,0,0,0.08);
       margin-bottom: 1.5rem;
     }
-
     .post-form input, .post-form textarea {
       width: 100%;
       padding: 10px;
@@ -30,7 +27,6 @@
       font-size: 0.95rem;
       outline-color: #9b4922;
     }
-
     .post-form button {
       background: rgba(155, 73, 34, 0.8);
       border: none;
@@ -40,7 +36,6 @@
       cursor: pointer;
       font-weight: 500;
     }
-
     .post-card {
       background: #fff;
       border-radius: 12px;
@@ -48,27 +43,23 @@
       padding: 1rem 1.2rem;
       margin-bottom: 1.2rem;
     }
-
     .post-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 6px;
     }
-
     .post-title {
       font-size: 1.1rem;
       font-weight: 700;
       margin-bottom: 4px;
       color: #111;
     }
-
     .post-content {
       font-size: 0.95rem;
       color: #333;
       margin-bottom: 10px;
     }
-
     .post-actions {
       display: flex;
       gap: 20px;
@@ -77,25 +68,23 @@
       color: #555;
       flex-wrap: wrap;
     }
-
     .post-actions span {
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 5px;
     }
-
     .like:hover { color: #ffb300; }
     .comment-toggle:hover { color: #9b4922; }
     .share:hover { color: #25d366; }
     .delete:hover { color: #e53935; }
+    .edit:hover { color: #1976d2; }
 
     .comment-section {
       border-top: 1px solid #eee;
       margin-top: 10px;
       padding-top: 10px;
     }
-
     .comment-form input,
     .comment-form textarea {
       width: 100%;
@@ -105,7 +94,6 @@
       margin-top: 5px;
       font-size: 0.9rem;
     }
-
     .comment-form button {
       margin-top: 6px;
       background: #9b4922;
@@ -116,17 +104,25 @@
       cursor: pointer;
       font-size: 0.9rem;
     }
-
     .comment {
       background: #f8f8f8;
       border-radius: 6px;
       padding: 8px 10px;
       margin-top: 6px;
+      position: relative;
+    }
+    .edit-comment {
+      font-size: 0.75rem;
+      color: #1976d2;
+      cursor: pointer;
+      margin-top: 4px;
+      display: inline-block;
     }
   </style>
 </head>
 <body>
- <header>
+
+<header>
   <h1>Komunitas Anak Rantau</h1>
   <nav>
     <a href="index.html" class="nav-icon">
@@ -136,127 +132,171 @@
   </nav>
 </header>
 
+<main class="forum-container">
+  <div class="post-form">
+    <input type="text" id="username" placeholder="Nama Anda" required />
+    <input type="text" id="title" placeholder="Judul Postingan" required />
+    <textarea id="content" rows="3" placeholder="Tulis isi postingan..." required></textarea>
+    <button id="submitPost">Posting</button>
+  </div>
 
-  <main class="forum-container">
-    <div class="post-form">
-      <input type="text" id="username" placeholder="Nama Anda" required />
-      <input type="text" id="title" placeholder="Judul Postingan" required />
-      <textarea id="content" rows="3" placeholder="Tulis isi postingan..." required></textarea>
-      <button id="submitPost">Posting</button>
-    </div>
+  <div id="feed"></div>
+</main>
 
-    <div id="feed"></div>
-  </main>
+<script>
+  const feed = document.getElementById("feed");
+  const submitPost = document.getElementById("submitPost");
+  let posts = JSON.parse(localStorage.getItem("posts")) || [];
 
-  <script>
-    const feed = document.getElementById("feed");
-    const submitPost = document.getElementById("submitPost");
-    let posts = JSON.parse(localStorage.getItem("posts")) || [];
+  function renderPosts() {
+    feed.innerHTML = "";
+    posts.forEach((post, index) => {
+      const card = document.createElement("div");
+      card.className = "post-card";
+      card.innerHTML = `
+        <div class="post-header">
+          <strong>${post.username}</strong>
+          <span style="font-size:0.85rem;color:#777;">${post.time}</span>
+        </div>
+        <div class="post-title">${post.title}</div>
+        <div class="post-content">${post.content}</div>
 
-    function renderPosts() {
-      feed.innerHTML = "";
-      posts.forEach((post, index) => {
-        const card = document.createElement("div");
-        card.className = "post-card";
-        card.innerHTML = `
-          <div class="post-header">
-            <strong>${post.username}</strong>
-            <span style="font-size:0.85rem;color:#777;">${post.time}</span>
+        <div class="post-actions">
+          <span class="like" data-index="${index}">👍 ${post.likes || 0}</span>
+          <span class="comment-toggle" data-index="${index}">💬 ${post.comments?.length || 0}</span>
+          <span class="share" data-index="${index}">🔗 Bagikan</span>
+          <span class="edit" data-index="${index}">✏️ Edit</span>
+          <span class="delete" data-index="${index}">🗑 Hapus</span>
+        </div>
+
+        <div class="comment-section" id="comments-${index}" style="display:none;">
+          <div id="comment-list-${index}">
+            ${(post.comments || [])
+              .map((c, i) => `
+                <div class="comment">
+                  <strong>${c.user}</strong>
+                  <p>${c.text}</p>
+                  <span class="edit-comment" data-post="${index}" data-comment="${i}">✏️ Edit komentar</span>
+                </div>
+              `)
+              .join("")}
           </div>
-          <div class="post-title">${post.title}</div>
-          <div class="post-content">${post.content}</div>
-          <div class="post-actions">
-            <span class="like" data-index="${index}">👍 ${post.likes || 0}</span>
-            <span class="comment-toggle" data-index="${index}">💬 ${post.comments?.length || 0}</span>
-            <span class="share" data-index="${index}">🔗 Bagikan</span>
-            <span class="delete" data-index="${index}">🗑 Hapus</span>
-          </div>
-          <div class="comment-section" id="comments-${index}" style="display:none;">
-            <div id="comment-list-${index}">
-              ${(post.comments || [])
-                .map(c => `<div class="comment"><strong>${c.user}</strong><p>${c.text}</p></div>`)
-                .join("")}
-            </div>
-            <form class="comment-form" data-index="${index}">
-              <input type="text" placeholder="Nama" class="comment-user" required />
-              <textarea rows="2" placeholder="Tulis komentar..." class="comment-text" required></textarea>
-              <button type="submit">Kirim</button>
-            </form>
-          </div>
-        `;
-        feed.appendChild(card);
-      });
-    }
 
-    submitPost.addEventListener("click", () => {
-      const username = document.getElementById("username").value.trim();
-      const title = document.getElementById("title").value.trim();
-      const content = document.getElementById("content").value.trim();
-      if (!username || !title || !content) return alert("Isi semua kolom dulu.");
+          <form class="comment-form" data-index="${index}">
+            <input type="text" placeholder="Nama" class="comment-user" required />
+            <textarea rows="2" placeholder="Tulis komentar..." class="comment-text" required></textarea>
+            <button type="submit">Kirim</button>
+          </form>
+        </div>
+      `;
+      feed.appendChild(card);
+    });
+  }
 
-      const now = new Date();
-      const time = now.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
+  submitPost.addEventListener("click", () => {
+    const username = document.getElementById("username").value.trim();
+    const title = document.getElementById("title").value.trim();
+    const content = document.getElementById("content").value.trim();
+    if (!username || !title || !content) return alert("Isi semua kolom dulu.");
 
-      posts.unshift({ username, title, content, time, likes: 0, comments: [] });
+    const now = new Date();
+    const time = now.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
+
+    posts.unshift({ username, title, content, time, likes: 0, comments: [] });
+    localStorage.setItem("posts", JSON.stringify(posts));
+    renderPosts();
+
+    document.getElementById("username").value = "";
+    document.getElementById("title").value = "";
+    document.getElementById("content").value = "";
+  });
+
+  feed.addEventListener("click", (e) => {
+    const likeBtn = e.target.closest(".like");
+    const shareBtn = e.target.closest(".share");
+    const toggleBtn = e.target.closest(".comment-toggle");
+    const deleteBtn = e.target.closest(".delete");
+    const editBtn = e.target.closest(".edit");
+    const editCommentBtn = e.target.closest(".edit-comment");
+
+    if (likeBtn) {
+      const idx = likeBtn.dataset.index;
+      posts[idx].likes++;
       localStorage.setItem("posts", JSON.stringify(posts));
       renderPosts();
+    }
 
-      document.getElementById("username").value = "";
-      document.getElementById("title").value = "";
-      document.getElementById("content").value = "";
-    });
+    if (shareBtn) {
+      const idx = shareBtn.dataset.index;
+      const shareText = `*${posts[idx].title}*\n${posts[idx].content}\n\nDari: ${posts[idx].username}`;
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+      window.open(waUrl, "_blank");
+    }
 
-    feed.addEventListener("click", (e) => {
-      const likeBtn = e.target.closest(".like");
-      const shareBtn = e.target.closest(".share");
-      const toggleBtn = e.target.closest(".comment-toggle");
-      const deleteBtn = e.target.closest(".delete");
+    if (toggleBtn) {
+      const idx = toggleBtn.dataset.index;
+      const section = document.getElementById(`comments-${idx}`);
+      section.style.display = section.style.display === "none" ? "block" : "none";
+    }
 
-      if (likeBtn) {
-        const idx = likeBtn.dataset.index;
-        posts[idx].likes++;
+    if (deleteBtn) {
+      const idx = deleteBtn.dataset.index;
+      if (confirm("Yakin mau hapus postingan ini?")) {
+        posts.splice(idx, 1);
         localStorage.setItem("posts", JSON.stringify(posts));
         renderPosts();
       }
+    }
 
-      if (shareBtn) {
-        const idx = shareBtn.dataset.index;
-        const shareText = `*${posts[idx].title}*\n${posts[idx].content}\n\nDari: ${posts[idx].username}`;
-        const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
-        window.open(waUrl, "_blank");
+    /* EDIT POST */
+    if (editBtn) {
+      const idx = editBtn.dataset.index;
+      const p = posts[idx];
+
+      const newTitle = prompt("Edit judul:", p.title);
+      const newContent = prompt("Edit isi:", p.content);
+
+      if (newTitle !== null && newContent !== null) {
+        posts[idx].title = newTitle.trim();
+        posts[idx].content = newContent.trim();
+        localStorage.setItem("posts", JSON.stringify(posts));
+        renderPosts();
       }
+    }
 
-      if (toggleBtn) {
-        const idx = toggleBtn.dataset.index;
-        const section = document.getElementById(`comments-${idx}`);
-        section.style.display = section.style.display === "none" ? "block" : "none";
+    /* EDIT KOMENTAR */
+    if (editCommentBtn) {
+      const postIdx = editCommentBtn.dataset.post;
+      const comIdx = editCommentBtn.dataset.comment;
+
+      const c = posts[postIdx].comments[comIdx];
+      const newText = prompt("Edit komentar:", c.text);
+
+      if (newText !== null) {
+        posts[postIdx].comments[comIdx].text = newText.trim();
+        localStorage.setItem("posts", JSON.stringify(posts));
+        renderPosts();
+        document.getElementById(`comments-${postIdx}`).style.display = "block";
       }
+    }
+  });
 
-      if (deleteBtn) {
-        const idx = deleteBtn.dataset.index;
-        if (confirm("Yakin mau hapus postingan ini?")) {
-          posts.splice(idx, 1);
-          localStorage.setItem("posts", JSON.stringify(posts));
-          renderPosts();
-        }
-      }
-    });
+  feed.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!e.target.classList.contains("comment-form")) return;
+    const idx = e.target.dataset.index;
+    const user = e.target.querySelector(".comment-user").value.trim();
+    const text = e.target.querySelector(".comment-text").value.trim();
+    if (!user || !text) return;
 
-    feed.addEventListener("submit", (e) => {
-      e.preventDefault();
-      if (!e.target.classList.contains("comment-form")) return;
-      const idx = e.target.dataset.index;
-      const user = e.target.querySelector(".comment-user").value.trim();
-      const text = e.target.querySelector(".comment-text").value.trim();
-      if (!user || !text) return;
-
-      posts[idx].comments.push({ user, text });
-      localStorage.setItem("posts", JSON.stringify(posts));
-      renderPosts();
-      document.getElementById(`comments-${idx}`).style.display = "block";
-    });
-
+    posts[idx].comments.push({ user, text });
+    localStorage.setItem("posts", JSON.stringify(posts));
     renderPosts();
-  </script>
+    document.getElementById(`comments-${idx}`).style.display = "block";
+  });
+
+  renderPosts();
+</script>
+
 </body>
 </html>
