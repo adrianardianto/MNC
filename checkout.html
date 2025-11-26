@@ -147,11 +147,12 @@
         return;
       }
 
-      const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-      const listItems = cart.map(i => `${i.name} x${i.qty}`).join(", ");
-      const message = `Halo cal, saya sudah melakukan pembayaran sebesar *Rp ${total.toLocaleString("id-ID")}* untuk pesanan: ${listItems}.`;
-      const waLink = `https://wa.me/${adminNumber}?text=${encodeURIComponent(message)}`;
-      window.open(waLink, "_blank");
+    const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+    const listItems = cart.map(i => `• ${i.name} x${i.qty}`).join("\n");
+    const message = `Halo Kak, saya sudah melakukan pembayaran sebesar *Rp ${total.toLocaleString("id-ID")}* untuk pesanan berikut:\n\n${listItems}\n\nBerikut bukti pembayarannya:`;
+    const waLink = `https://wa.me/${adminNumber}?text=${encodeURIComponent(message)}`;
+    window.open(waLink, "_blank");
+
     });
 
     renderCart();
