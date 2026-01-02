@@ -183,36 +183,38 @@ if (window.location.pathname.includes("checkout.html")) {
   renderCart();
 }
 // ====== SLIDER BANNER MANUAL + OTOMATIS ======
+// ====== SLIDER BANNER MANUAL + OTOMATIS ======
 document.addEventListener("DOMContentLoaded", () => {
   const bannerSlides = document.querySelector(".promo-slider .slides");
-  if (!bannerSlides) return; // Exit if no slider
-  const totalBannerSlides = bannerSlides.children.length;
-  let bannerCurrent = 0;
+  if (bannerSlides) {
+      const totalBannerSlides = bannerSlides.children.length;
+      let bannerCurrent = 0;
 
-  window.moveBanner = function(direction) {
-    bannerCurrent = (bannerCurrent + direction + totalBannerSlides) % totalBannerSlides;
-    bannerSlides.style.transform = `translateX(-${bannerCurrent * 100}%)`;
-    bannerSlides.style.transition = "transform 0.6s ease-in-out";
-  };
+      window.moveSlide = function(direction) {
+        bannerCurrent = (bannerCurrent + direction + totalBannerSlides) % totalBannerSlides;
+        bannerSlides.style.transform = `translateX(-${bannerCurrent * 100}%)`;
+        bannerSlides.style.transition = "transform 1s ease-in-out";
+      };
 
-  // auto-slide tiap 3 detik
-  setInterval(() => moveBanner(1), 3000);
+      // auto-slide tiap 5 detik
+      setInterval(() => moveSlide(1), 5000);
+  }
 });
 
-// ====== SLIDER TESTIMONI OTOMATIS ======
-document.addEventListener("DOMContentLoaded", () => {
-  const testiSlides = document.querySelector(".testimonial-slider .slides");
-  const cards = testiSlides.querySelectorAll(".testimonial-card");
-  const total = cards.length;
-  const visible = 3; // jumlah testimoni tampil bersamaan
-  let current = 0;
 
-    function autoSlideTestimoni() {
-      current++;
-      if (current > total - visible) current = 0;
-      testiSlides.style.transform = `translateX(-${current * (100 / visible)}%)`;
-      testiSlides.style.transition = "transform 0.8s ease-in-out";
+
+// ====== SCROLL REVEAL ANIMATION ======
+window.addEventListener('scroll', reveal);
+function reveal() {
+  var reveals = document.querySelectorAll('.reveal');
+  for (var i = 0; i < reveals.length; i++) {
+    var windowheight = window.innerHeight;
+    var revealtop = reveals[i].getBoundingClientRect().top;
+    var revealpoint = 150;
+    if (revealtop < windowheight - revealpoint) {
+      reveals[i].classList.add('active');
     }
-  
-    setInterval(autoSlideTestimoni, 3000);
-  });
+  }
+}
+// Trigger once on load
+reveal();

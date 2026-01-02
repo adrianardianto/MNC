@@ -165,6 +165,16 @@ nav a:hover {
   color: #9b4922;
 }
 
+nav a.active-link {
+  color: #9b4922;
+  font-weight: 700;
+}
+
+nav a:active {
+    transform: scale(0.95);
+    color: #823d1c;
+}
+
 /* Specific styling for nav icons if needed */
 .nav-icon {
   display: flex;
@@ -272,27 +282,54 @@ nav a:hover {
 /* ============================================================
    TESTIMONIAL SECTION
 ============================================================ */
+/* ============================================================
+   TESTIMONIAL SECTION (SLIDEABLE)
+============================================================ */
 .testimonial {
   text-align: center;
-  padding: 2rem 1rem;
+  padding: 4rem 1rem;
   background: #fffaf5;
 }
 
 .testimonial h2 {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   color: #9b4922;
 }
 
 .testimonial-slider {
-  position: relative;
-  overflow: hidden;
-  max-width: 1000px;
-  margin: auto;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 20px;
+  padding: 20px 5%; /* Space for shadows and peek */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonial-slider::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .slides {
-  display: flex;
-  transition: transform 0.8s ease-in-out;
+  display: contents; /* Remove the container wrapper effect so slider controls the scroll */
+}
+
+/* Styles for cards inside the slider */
+.testimonial-slider .modern-card {
+  flex: 0 0 320px; /* Fixed width for better slide feel */
+  scroll-snap-align: center;
+  margin: 0;
+  text-align: left;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .testimonial-slider .modern-card {
+    flex: 0 0 280px;
+  }
 }
 
 .testimonial-card {
@@ -1090,6 +1127,70 @@ footer {
     flex: 1;
 }
 
+/* ============================================================
+   GLOBAL POLISH & ANIMATIONS
+============================================================ */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Offset for sticky header */
+}
+
+::selection {
+  background: #9b4922;
+  color: white;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cba595;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9b4922;
+}
+
+/* Reveal Animation */
+.reveal {
+  position: relative;
+  transform: translateY(50px);
+  opacity: 0;
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Product Card Enhanced Hover */
+.product-card {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.product-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.product-card button {
+    transition: all 0.3s ease;
+    opacity: 0.9;
+}
+
+.product-card button:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
 .comment-bubble strong {
     font-size: 0.85rem;
     color: #9b4922;
@@ -1099,6 +1200,198 @@ footer {
     font-size: 0.9rem;
     margin: 4px 0 0;
     color: #333;
+}
+
+/* ============================================================
+   RESPONSIVE MOBILE DESIGN
+============================================================ */
+@media (max-width: 768px) {
+    /* --- Header & Navbar --- */
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 1rem;
+    }
+
+    nav {
+        width: 100%;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    nav a {
+        font-size: 0.9rem;
+    }
+
+    /* --- Hero Section --- */
+    .hero {
+        padding: 100px 20px 60px;
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .hero button {
+        width: 100%;
+    }
+
+    /* --- Sections & Titles --- */
+    .section-title h2 {
+        font-size: 2rem;
+    }
+
+    .promo-slider {
+        width: 95%;
+    }
+    
+    .nav {
+        font-size: 1.2rem;
+        width: 35px;
+        height: 35px;
+    }
+
+    /* --- Checkout Page (Mobile Table to Cards) --- */
+    .checkout-box {
+        padding: 1.5rem;
+    }
+
+    #cartTable, #cartTable tbody, #cartTable tr, #cartTable td {
+        display: block;
+        width: 100%;
+    }
+
+    #cartTable thead {
+        display: none; /* Hide headers on mobile */
+    }
+
+    #cartTable tr {
+        margin-bottom: 20px;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    #cartTable td {
+        text-align: right;
+        padding: 10px 0;
+        border-bottom: 1px solid #f5f5f5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #cartTable td:last-child {
+        border-bottom: none;
+    }
+
+    #cartTable td:first-child {
+        text-align: left;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    #cartTable img {
+        width: 80px;
+        height: 80px;
+    }
+
+    /* --- Footer --- */
+    .footer-content {
+        grid-template-columns: 1fr; /* Stack columns */
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .footer-links a:hover {
+        padding-left: 0; /* Disable shift on mobile center alignment */
+        color: #9b4922;
+    }
+    
+    .footer-col h3::after {
+        margin: 8px auto 0; /* Center the underline */
+    }
+
+    /* --- Community Page --- */
+    .forum-section {
+        padding-inline: 10px;
+    }
+
+    .post-header {
+        flex-direction: row; /* Keep row */
+    }
+    
+    .post-footer {
+        flex-wrap: wrap; /* Allow wrapping if buttons too wide */
+    }
+    
+    .action-btn {
+        font-size: 0.8rem;
+    }
+
+    /* --- QRIS Fix --- */
+    .qris-image {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .qris-frame {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .checkout-box {
+        padding: 1.5rem 1rem;
+        width: 95%; /* Use more width on mobile */
+    }
+
+    .checkout-container {
+        padding-top: 1rem;
+    }
+
+    .qris-section {
+        padding: 20px 0;
+    }
+
+    .payment-info {
+        max-width: 100%;
+        font-size: 0.9rem;
+    }
+
+    /* --- Navbar Tweak --- */
+    nav {
+        flex-wrap: wrap; /* Allow wrapping for very small screens */
+    }
+    
+    header h1 {
+        text-align: center;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Extra Small Screen Tweaks */
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    nav {
+        flex-direction: row; 
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
 
 
