@@ -3,189 +3,160 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Komunitas</title>
+  <title>Komunitas Anak Rantau - Mangkok & Cerita</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    .forum-container {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 1rem;
-    }
-    .post-form {
-      background: #fff;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-      margin-bottom: 1.5rem;
-    }
-    .post-form input, .post-form textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      font-size: 0.95rem;
-      outline-color: #9b4922;
-    }
-    .post-form button {
-      background: rgba(155, 73, 34, 0.8);
-      border: none;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-    .post-card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-      padding: 1rem 1.2rem;
-      margin-bottom: 1.2rem;
-    }
-    .post-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-    .post-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-      color: #111;
-    }
-    .post-content {
-      font-size: 0.95rem;
-      color: #333;
-      margin-bottom: 10px;
-    }
-    .post-actions {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      font-size: 0.9rem;
-      color: #555;
-      flex-wrap: wrap;
-    }
-    .post-actions span {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .like:hover { color: #ffb300; }
-    .comment-toggle:hover { color: #9b4922; }
-    .share:hover { color: #25d366; }
-    .delete:hover { color: #e53935; }
-    .edit:hover { color: #1976d2; }
-
-    .comment-section {
-      border-top: 1px solid #eee;
-      margin-top: 10px;
-      padding-top: 10px;
-    }
-    .comment-form input,
-    .comment-form textarea {
-      width: 100%;
-      padding: 6px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      margin-top: 5px;
-      font-size: 0.9rem;
-    }
-    .comment-form button {
-      margin-top: 6px;
-      background: #9b4922;
-      border: none;
-      color: white;
-      padding: 6px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 0.9rem;
-    }
-    .comment {
-      background: #f8f8f8;
-      border-radius: 6px;
-      padding: 8px 10px;
-      margin-top: 6px;
-      position: relative;
-    }
-    .edit-comment {
-      font-size: 0.75rem;
-      color: #1976d2;
-      cursor: pointer;
-      margin-top: 4px;
-      display: inline-block;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header>
-  <h1>Komunitas Anak Rantau</h1>
+  <h1>Mangkok & Cerita</h1>
   <nav>
-    <a href="index.html" class="nav-icon">
-      <img src="https://cdn-icons-png.flaticon.com/128/10725/10725600.png" alt="Home" width="22" height="22">
-      <span>Home</span>
+    <a href="index.html" class="nav-icon" style="flex-direction: row; color: white;">
+      ← Kembali ke Menu
     </a>
   </nav>
 </header>
 
-<main class="forum-container">
-  <div class="post-form">
-    <input type="text" id="username" placeholder="Nama Anda" required />
-    <input type="text" id="title" placeholder="Judul Postingan" required />
-    <textarea id="content" rows="3" placeholder="Tulis isi postingan..." required></textarea>
-    <button id="submitPost">Posting</button>
-  </div>
+<main class="forum-section">
+  <div class="forum-container">
+    
+    <!-- Input Section -->
+    <div class="post-form-card">
+      <h3>
+        <img src="https://cdn-icons-png.flaticon.com/128/2921/2921222.png" alt="Edit" width="24">
+        Bagikan Ceritamu
+      </h3>
+      
+      <div class="form-group">
+        <input type="text" id="username" class="form-input" placeholder="Nama Kamu (Boleh Samaran)" required />
+      </div>
+      
+      <div class="form-group">
+        <input type="text" id="title" class="form-input" placeholder="Judul Topik Seru" required />
+      </div>
+      
+      <div class="form-group">
+        <textarea id="content" class="form-textarea" placeholder="Apa yang sedang kamu rasakan atau alami di perantauan? Ceritakan di sini..." required></textarea>
+      </div>
+      
+      <div style="overflow: hidden;">
+        <button id="submitPost" class="submit-post-btn">Posting Cerita</button>
+      </div>
+    </div>
 
-  <div id="feed"></div>
+    <!-- Feed Section -->
+    <div class="feed-filter">
+      <button class="filter-btn active" id="btnNewest">Terbaru</button>
+      <button class="filter-btn" id="btnOldest">Terlama</button>
+    </div>
+
+    <div id="feed">
+        <!-- Posts will be rendered here -->
+    </div>
+
+  </div>
 </main>
 
 <script>
   const feed = document.getElementById("feed");
   const submitPost = document.getElementById("submitPost");
+  const btnNewest = document.getElementById("btnNewest");
+  const btnOldest = document.getElementById("btnOldest");
+  
   let posts = JSON.parse(localStorage.getItem("posts")) || [];
+  let isReversed = false; // Default: Newest first
+
+  // Helper function to get random avatar color
+  function getAvatarColor(name) {
+      const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6', '#e67e22', '#1abc9c'];
+      let hash = 0;
+      for (let i = 0; i < name.length; i++) {
+          hash = name.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      return colors[Math.abs(hash) % colors.length];
+  }
 
   function renderPosts() {
     feed.innerHTML = "";
-    posts.forEach((post, index) => {
+    
+    // Determine order
+    let displayPosts = isReversed ? [...posts].reverse() : posts;
+
+    if (displayPosts.length === 0) {
+        feed.innerHTML = `
+            <div style="text-align:center; padding: 40px; color:#777;">
+                <img src="https://cdn-icons-png.flaticon.com/128/7486/7486747.png" width="80" style="opacity:0.5; margin-bottom:15px;">
+                <p>Belum ada cerita nih. Jadilah yang pertama berbagi!</p>
+            </div>
+        `;
+        return;
+    }
+
+    displayPosts.forEach((post, i) => {
+      // Must map back to original index for editing/deleting if reversed
+      // But for simplicity, we'll find the index in original 'posts' array or use ID if we had one.
+      // Since we don't have IDs, we will stick to visual rendering issues.
+      // FIX: The action buttons (like/delete) use 'index'. If we reverse, the index 'i' is wrong relative to 'posts'.
+      // We need to pass the ACTUAL index of the post in the original 'posts' array.
+      
+      const originalIndex = isReversed ? (posts.length - 1 - i) : i;
+      
       const card = document.createElement("div");
       card.className = "post-card";
+      
+      // Initials for avatar
+      const initials = post.username.substring(0, 2).toUpperCase();
+      const avatarColor = getAvatarColor(post.username);
+
       card.innerHTML = `
         <div class="post-header">
-          <strong>${post.username}</strong>
-          <span style="font-size:0.85rem;color:#777;">${post.time}</span>
-        </div>
-        <div class="post-title">${post.title}</div>
-        <div class="post-content">${post.content}</div>
-
-        <div class="post-actions">
-          <span class="like" data-index="${index}">👍 ${post.likes || 0}</span>
-          <span class="comment-toggle" data-index="${index}">💬 ${post.comments?.length || 0}</span>
-          <span class="share" data-index="${index}">🔗 Bagikan</span>
-          <span class="edit" data-index="${index}">✏️ Edit</span>
-          <span class="delete" data-index="${index}">🗑 Hapus</span>
+          <div class="user-avatar" style="background-color: ${avatarColor}; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">${initials}</div>
+          <div class="user-info">
+            <strong>${post.username}</strong>
+            <span>${post.time}</span>
+          </div>
         </div>
 
-        <div class="comment-section" id="comments-${index}" style="display:none;">
-          <div id="comment-list-${index}">
+        <div class="post-body">
+            <h4>${post.title}</h4>
+            <p>${post.content}</p>
+        </div>
+
+        <div class="post-footer">
+          <button class="action-btn like" data-index="${originalIndex}">
+             ${post.likes || 0} Suka
+          </button>
+          <button class="action-btn comment-toggle" data-index="${originalIndex}">
+             ${post.comments?.length || 0} Komentar
+          </button>
+          <button class="action-btn share" data-index="${originalIndex}">
+             Bagikan
+          </button>
+          <div style="margin-left: auto;">
+             <button class="action-btn delete" data-index="${originalIndex}" style="color: #e74c3c;">Hapus</button>
+          </div>
+        </div>
+
+        <div class="comments-container" id="comments-${originalIndex}">
+          <div id="comment-list-${originalIndex}">
             ${(post.comments || [])
               .map((c, i) => `
-                <div class="comment">
-                  <strong>${c.user}</strong>
-                  <p>${c.text}</p>
-                  <span class="edit-comment" data-post="${index}" data-comment="${i}">✏️ Edit komentar</span>
+                <div class="comment-item">
+                     <div class="user-avatar" style="width: 30px; height: 30px; font-size: 0.7rem; background-color: ${getAvatarColor(c.user)}; color:white; display:flex; align-items:center; justify-content:center;">${c.user.substring(0,1).toUpperCase()}</div>
+                    <div class="comment-bubble">
+                        <strong>${c.user}</strong>
+                        <p>${c.text}</p>
+                    </div>
                 </div>
               `)
               .join("")}
           </div>
 
-          <form class="comment-form" data-index="${index}">
-            <input type="text" placeholder="Nama" class="comment-user" required />
-            <textarea rows="2" placeholder="Tulis komentar..." class="comment-text" required></textarea>
-            <button type="submit">Kirim</button>
+          <form class="comment-form" data-index="${originalIndex}" style="margin-top: 15px; display:flex; gap:10px;">
+            <input type="text" placeholder="Nama" class="comment-user form-input" style="width:30%;" required />
+            <input type="text" placeholder="Tulis komentar..." class="comment-text form-input" style="flex:1;" required />
+            <button type="submit" class="submit-post-btn" style="padding: 10px 15px;">→</button>
           </form>
         </div>
       `;
@@ -193,19 +164,41 @@
     });
   }
 
+  // Sorting Events
+  btnNewest.addEventListener("click", () => {
+    isReversed = false;
+    btnNewest.classList.add("active");
+    btnOldest.classList.remove("active");
+    renderPosts();
+  });
+
+  btnOldest.addEventListener("click", () => {
+    isReversed = true;
+    btnOldest.classList.add("active");
+    btnNewest.classList.remove("active");
+    renderPosts();
+  });
+
   submitPost.addEventListener("click", () => {
     const username = document.getElementById("username").value.trim();
     const title = document.getElementById("title").value.trim();
     const content = document.getElementById("content").value.trim();
-    if (!username || !title || !content) return alert("Isi semua kolom dulu.");
+    
+    if (!username || !title || !content) {
+        alert("Mohon isi semua kolom untuk berbagi cerita.");
+        return;
+    }
 
     const now = new Date();
-    const time = now.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
+    // Format date nicely: "Senin, 10 Jan 12.30"
+    const options = { weekday: 'long', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' };
+    const time = now.toLocaleDateString("id-ID", options);
 
     posts.unshift({ username, title, content, time, likes: 0, comments: [] });
     localStorage.setItem("posts", JSON.stringify(posts));
     renderPosts();
 
+    // Reset form
     document.getElementById("username").value = "";
     document.getElementById("title").value = "";
     document.getElementById("content").value = "";
@@ -216,8 +209,6 @@
     const shareBtn = e.target.closest(".share");
     const toggleBtn = e.target.closest(".comment-toggle");
     const deleteBtn = e.target.closest(".delete");
-    const editBtn = e.target.closest(".edit");
-    const editCommentBtn = e.target.closest(".edit-comment");
 
     if (likeBtn) {
       const idx = likeBtn.dataset.index;
@@ -228,7 +219,7 @@
 
     if (shareBtn) {
       const idx = shareBtn.dataset.index;
-      const shareText = `*${posts[idx].title}*\n${posts[idx].content}\n\nDari: ${posts[idx].username}`;
+      const shareText = `*${posts[idx].title}*\n${posts[idx].content}\n\nOleh: ${posts[idx].username} - via Mangkok & Cerita`;
       const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
       window.open(waUrl, "_blank");
     }
@@ -236,63 +227,41 @@
     if (toggleBtn) {
       const idx = toggleBtn.dataset.index;
       const section = document.getElementById(`comments-${idx}`);
-      section.style.display = section.style.display === "none" ? "block" : "none";
+      section.classList.toggle("show");
     }
 
     if (deleteBtn) {
       const idx = deleteBtn.dataset.index;
-      if (confirm("Yakin mau hapus postingan ini?")) {
+      if (confirm("Hapus cerita ini?")) {
         posts.splice(idx, 1);
         localStorage.setItem("posts", JSON.stringify(posts));
         renderPosts();
       }
     }
-
-    /* EDIT POST */
-    if (editBtn) {
-      const idx = editBtn.dataset.index;
-      const p = posts[idx];
-
-      const newTitle = prompt("Edit judul:", p.title);
-      const newContent = prompt("Edit isi:", p.content);
-
-      if (newTitle !== null && newContent !== null) {
-        posts[idx].title = newTitle.trim();
-        posts[idx].content = newContent.trim();
-        localStorage.setItem("posts", JSON.stringify(posts));
-        renderPosts();
-      }
-    }
-
-    /* EDIT KOMENTAR */
-    if (editCommentBtn) {
-      const postIdx = editCommentBtn.dataset.post;
-      const comIdx = editCommentBtn.dataset.comment;
-
-      const c = posts[postIdx].comments[comIdx];
-      const newText = prompt("Edit komentar:", c.text);
-
-      if (newText !== null) {
-        posts[postIdx].comments[comIdx].text = newText.trim();
-        localStorage.setItem("posts", JSON.stringify(posts));
-        renderPosts();
-        document.getElementById(`comments-${postIdx}`).style.display = "block";
-      }
-    }
   });
 
+  // Handle Comment Submit
   feed.addEventListener("submit", (e) => {
     e.preventDefault();
     if (!e.target.classList.contains("comment-form")) return;
+    
     const idx = e.target.dataset.index;
-    const user = e.target.querySelector(".comment-user").value.trim();
-    const text = e.target.querySelector(".comment-text").value.trim();
+    const userInput = e.target.querySelector(".comment-user");
+    const textInput = e.target.querySelector(".comment-text");
+    
+    const user = userInput.value.trim();
+    const text = textInput.value.trim();
+    
     if (!user || !text) return;
 
     posts[idx].comments.push({ user, text });
     localStorage.setItem("posts", JSON.stringify(posts));
+    
+    // Better UX: Don't re-render whole feed, just add comment?
+    // For simplicity, re-render and re-open the comment section
     renderPosts();
-    document.getElementById(`comments-${idx}`).style.display = "block";
+    const section = document.getElementById(`comments-${idx}`);
+    section.classList.add("show");
   });
 
   renderPosts();
