@@ -168,8 +168,28 @@ if (window.location.pathname.includes("checkout.html")) {
       const subtotal = price * item.qty;
       total += subtotal;
       
+      // Image Mapping for fallback
+      const productImages = {
+        'RiceBowl Cumi': 'https://i.pinimg.com/1200x/a3/83/b2/a383b21f877213b403e307ff5ac3d102.jpg',
+        'RiceBowl Chicken': 'https://i.pinimg.com/736x/1a/2d/ef/1a2defa61f585b67b97a902a42e4e3c0.jpg',
+        'RiceBowl Daging': 'https://i.pinimg.com/736x/9a/17/be/9a17be400d3c37118f73c71ea4b8e42b.jpg',
+        'RiceBowl Udang': 'https://i.pinimg.com/736x/1a/2d/ef/1a2defa61f585b67b97a902a42e4e3c0.jpg',
+        'Milo': 'https://i.pinimg.com/736x/0f/de/75/0fde75dcdcf92050ebca1f896db5db1f.jpg',
+        'Milo Ice': 'https://i.pinimg.com/736x/0f/de/75/0fde75dcdcf92050ebca1f896db5db1f.jpg',
+        'Teh Tarik': 'https://i.pinimg.com/736x/85/ca/a7/85caa796e00f8eccc334c6cdd835e578.jpg',
+        'Soft Cookies': 'https://uploads.onecompiler.io/42vbn3cw5/443myvsf5/gambar%20cookies.jpg',
+        'Cookies Original': 'https://uploads.onecompiler.io/42vbn3cw5/443myvsf5/gambar%20cookies.jpg',
+        'Cookies Matcha': 'https://teakandthyme.com/wp-content/uploads/2023/09/matcha-white-chocolate-cookies-DSC_5105-1x1-1200.jpg',
+        'Cookies Red Velvet': 'https://img-global.cpcdn.com/recipes/9448b3de822b7161/680x781cq80/red-velvet-almond-cookies-foto-resep-utama.jpg',
+        'Lemon Tea': 'https://img.freepik.com/premium-photo/iced-lemon-tea-plastic-takeaway-glass_861799-3261.jpg',
+        'Bundle Hemat 1': 'https://img.freepik.com/premium-photo/iced-lemon-tea-plastic-takeaway-glass_861799-3261.jpg' 
+      };
+
       // Fallback if image is missing
-      const imgSrc = item.image ? item.image : 'https://placehold.co/60x60?text=No+Img';
+      let imgSrc = item.image;
+      if (!imgSrc || imgSrc === 'undefined') {
+          imgSrc = productImages[item.name] || 'https://placehold.co/60x60?text=No+Img';
+      }
 
       const row = `
         <tr>
@@ -221,22 +241,69 @@ if (window.location.pathname.includes("checkout.html")) {
   };
 
   window.removeItem = function (index) {
-    if (confirm(`Hapus ${cart[index].name}?`)) {
-      cart.splice(index, 1);
-      renderCart();
-    }
+    const itemName = cart[index].name;
+    showConfirm(`Hapus ${itemName}?`, () => {
+        cart.splice(index, 1);
+        renderCart();
+        showToast(`${itemName} dihapus`, 'delete');
+    });
   };
 
   const resetBtn = document.getElementById("resetCartBtn");
   if (resetBtn) {
     resetBtn.addEventListener("click", () => {
-      if (confirm("Yakin mau hapus semua isi keranjang?")) {
+      showConfirm("Yakin hapus semua?", () => {
         cart = [];
         localStorage.removeItem("cart");
         renderCart();
-      }
+        showToast('Keranjang bersih', 'delete');
+      });
     });
   }
+
+// ====== CUSTOM CONFIRM MODAL ======
+function showConfirm(message, onConfirm) {
+    // Buat elemen modal jika belum ada
+    let modal = document.getElementById('custom-confirm-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'custom-confirm-modal';
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+            <div class="modal-box">
+                <div class="modal-title">Konfirmasi</div>
+                <div class="modal-text" id="confirm-msg"></div>
+                <div class="modal-actions">
+                    <button class="modal-btn cancel" id="confirm-cancel">Batal</button>
+                    <button class="modal-btn confirm" id="confirm-ok">Ya, Hapus</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    const msgEl = document.getElementById('confirm-msg');
+    const cancelBtn = document.getElementById('confirm-cancel');
+    const okBtn = document.getElementById('confirm-ok');
+
+    msgEl.textContent = message;
+    modal.classList.add('show');
+
+    // Bersihkan listener lama (supaya tidak numpuk)
+    const newCancel = cancelBtn.cloneNode(true);
+    const newOk = okBtn.cloneNode(true);
+    cancelBtn.parentNode.replaceChild(newCancel, cancelBtn);
+    okBtn.parentNode.replaceChild(newOk, okBtn);
+
+    newCancel.addEventListener('click', () => {
+        modal.classList.remove('show');
+    });
+
+    newOk.addEventListener('click', () => {
+        onConfirm();
+        modal.classList.remove('show');
+    });
+}
 
   const sendProofBtn = document.getElementById("sendProofBtn");
   if (sendProofBtn) {
