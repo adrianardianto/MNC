@@ -1,14 +1,16 @@
 /* ============================================================
    HERO SECTION (PENGENALAN TOKO)
 ============================================================ */
+/* ============================================================
+   HERO SECTION (MODERN PREMIUM)
+============================================================ */
 .hero {
-  background: url('https://uploads.onecompiler.io/42vbn3cw5/443k22ept/03518546-8f07-4ec2-9e26-88362b7fa1ae.png')
-
-    center/cover no-repeat;
+  background: url('https://uploads.onecompiler.io/42vbn3cw5/443k22ept/03518546-8f07-4ec2-9e26-88362b7fa1ae.png') center/cover no-repeat;
   color: #fff;
   text-align: center;
-  padding: 110px 20px;
+  padding: 160px 20px 120px;
   position: relative;
+  overflow: hidden;
 }
 
 .hero::after {
@@ -18,44 +20,71 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.55);
+  background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
   z-index: 0;
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
-  max-width: 700px;
+  max-width: 800px;
   margin: auto;
+  animation: fadeInHero 1s ease forwards;
 }
 
 .hero h1 {
-  font-size: 2.5em;
-  margin-bottom: 12px;
-  font-weight: 600;
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
 .hero p {
-  font-size: 1.1em;
-  line-height: 1.6;
-  margin-bottom: 24px;
+  font-size: 1.25rem;
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
 }
 
 .hero button {
-  background-color: #9b4922;
+  background: #9b4922;
   color: #fff;
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 1em;
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-size: 1.1rem;
   cursor: pointer;
-  font-weight: 500;
-  transition: background 0.3s ease, transform 0.2s ease;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(155, 73, 34, 0.4);
 }
 
 .hero button:hover {
-  background-color: #823d1c;
-  transform: translateY(-2px);
+  background: #823d1c;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(155, 73, 34, 0.5);
+}
+
+.hero .secondary-btn {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.8);
+    box-shadow: none;
+}
+
+.hero .secondary-btn:hover {
+    background: white;
+    color: #9b4922;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255,255,255,0.3);
 }
 
 /* Animasi masuk halus */
@@ -439,12 +468,105 @@ form button:hover {
 /* ============================================================
    FOOTER
 ============================================================ */
+/* ============================================================
+   MODERN FOOTER
+============================================================ */
 footer {
-  background: #222;
+  background: #2c3e50;
+  color: #ecf0f1;
+  padding: 60px 20px 20px;
+  font-size: 0.95rem;
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-col h3 {
   color: #fff;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  position: relative;
+  display: inline-block;
+}
+
+.footer-col h3::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #9b4922;
+  margin-top: 8px;
+  border-radius: 2px;
+}
+
+.footer-col p {
+  line-height: 1.6;
+  color: #bdc3c7;
+  margin-bottom: 15px;
+}
+
+.footer-links a {
+  display: block;
+  color: #bdc3c7;
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #9b4922;
+  padding-left: 5px;
+}
+
+.copyright {
   text-align: center;
-  padding: 1rem;
-  margin-top: 3rem;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  color: #95a5a6;
+  font-size: 0.85rem;
+}
+
+/* ============================================================
+   UTILITIES (MODERN)
+============================================================ */
+.section-title {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-title h2 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.section-title p {
+  color: #7f8c8d;
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+}
+
+.modern-card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.03);
+  text-align: center; 
+}
+
+.modern-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
 }
 
 /* ============================================================
