@@ -75,7 +75,7 @@ if (form) {
 // ====== FITUR CHECKOUT & KERANJANG ======
 if (window.location.pathname.includes("checkout.html")) {
   const tbody = document.querySelector("#cartTable tbody");
-  const totalPrice = document.getElementById("totalPrice");
+  const totalValue = document.getElementById("totalValue");
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   const adminNumber = "62895365527136";
 
@@ -84,29 +84,53 @@ if (window.location.pathname.includes("checkout.html")) {
     tbody.innerHTML = "";
     let total = 0;
 
+    if (cart.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 40px; color: #777;">Keranjang Anda masih kosong. <a href="index.html" style="color:#9b4922; font-weight:bold;">Belanja Dulu Yuk!</a></td></tr>`;
+        if(totalValue) totalValue.textContent = "Rp 0";
+        return;
+    }
+
     cart.forEach((item, index) => {
       const price = Number(item.price);
       const subtotal = price * item.qty;
       total += subtotal;
+      
+      // Fallback if image is missing
+      const imgSrc = item.image ? item.image : 'https://placehold.co/60x60?text=No+Img';
 
       const row = `
         <tr>
-          <td><img src="${item.image}" width="50"> ${item.name}</td>
           <td>
-            <button onclick="decreaseQty(${index})">-</button>
-            ${item.qty}
-            <button onclick="increaseQty(${index})">+</button>
+            <img src="${imgSrc}" alt="${item.name}" width="60" height="60" onerror="this.src='https://placehold.co/60x60?text=Error'">
+            <div style="text-align:left;">
+                <div style="font-weight:600; font-size:1rem; color:#2c3e50;">${item.name}</div>
+                <div style="font-size:0.85rem; color:#7f8c8d;">Rp ${price.toLocaleString("id-ID")}</div>
+            </div>
           </td>
-          <td>Rp ${price.toLocaleString("id-ID")}</td>
-          <td>Rp ${subtotal.toLocaleString("id-ID")}</td>
-          <td><button onclick="removeItem(${index})">Hapus</button></td>
+          <td style="text-align:center;">
+            <div class="qty-control">
+                <button class="qty-btn" onclick="decreaseQty(${index})">-</button>
+                <span class="qty-val">${item.qty}</span>
+                <button class="qty-btn" onclick="increaseQty(${index})">+</button>
+            </div>
+          </td>
+          <td style="text-align:left;">Rp ${price.toLocaleString("id-ID")}</td>
+          <td style="font-weight:600; color:#9b4922;">Rp ${subtotal.toLocaleString("id-ID")}</td>
+          <td style="text-align:right;">
+            <button class="btn-delete" onclick="removeItem(${index})">
+                Hapus
+            </button>
+          </td>
         </tr>
       `;
       tbody.innerHTML += row;
     });
 
-    totalPrice.textContent = `Total: Rp ${total.toLocaleString("id-ID")}`;
+    if (totalValue) {
+        totalValue.textContent = `Rp ${total.toLocaleString("id-ID")}`;
+    }
     localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount(); // Sync if badge exists
   }
 
   window.increaseQty = function (index) {
@@ -149,8 +173,8 @@ if (window.location.pathname.includes("checkout.html")) {
         return;
       }
       const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-      const listItems = cart.map(i => `${i.name} x${i.qty}`).join(", ");
-      const message = `Halo Admin, saya sudah melakukan pembayaran sebesar *Rp ${total.toLocaleString("id-ID")}* untuk pesanan: ${listItems}.`;
+      const listItems = cart.map(i => `• ${i.name} x${i.qty}`).join("\n");
+      const message = `Halo Kak, saya sudah melakukan pembayaran sebesar *Rp ${total.toLocaleString("id-ID")}* untuk pesanan berikut:\n\n${listItems}\n\nMohon diproses ya kak. Terima kasih!`;
       const waLink = `https://wa.me/${adminNumber}?text=${encodeURIComponent(message)}`;
       window.open(waLink, "_blank");
     });
