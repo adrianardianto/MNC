@@ -94,52 +94,77 @@ body {
    HEADER & NAVBAR
 ============================================================ */
 header {
-  background-color: #9b4922;
-  color: white;
-  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1rem 5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Softer shadow */
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 header h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #9b4922; /* Brand color text */
+  letter-spacing: -0.5px;
 }
 
 nav {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 nav a {
-  color: white;
+  color: #555; /* Neutral dark for links */
   font-weight: 500;
   text-decoration: none;
-  transition: color 0.2s ease;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 nav a:hover {
-  color: #ffd8c2;
+  color: #9b4922;
 }
 
+/* Specific styling for nav icons if needed */
 .nav-icon {
   display: flex;
-  flex-direction: column; /* teks di bawah gambar */
-  align-items: center;    /* tengahin semuanya */
-  text-decoration: none;  /* hapus underline */
-  color: inherit;         /* biar warna ikut tema */
-  font-size: 0.8 rem;      /* sesuaikan ukuran teks */
-  margin: 5 px;         /* jarak antar ikon */
+  flex-direction: row; /* Horizontal layout */
+  align-items: center; 
+  gap: 8px;
+  margin: 0;
 }
 
 .nav-icon img {
-  margin-bottom: 4px; /* jarak kecil antara gambar dan teks */
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  margin: 0;
+}
+
+/* Cart Button Style */
+.nav-btn {
+    background: #9b4922;
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(155, 73, 34, 0.2);
+}
+
+.nav-btn:hover {
+    background: #823d1c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(155, 73, 34, 0.3);
 }
 
 

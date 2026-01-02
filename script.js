@@ -185,6 +185,7 @@ if (window.location.pathname.includes("checkout.html")) {
 // ====== SLIDER BANNER MANUAL + OTOMATIS ======
 document.addEventListener("DOMContentLoaded", () => {
   const bannerSlides = document.querySelector(".promo-slider .slides");
+  if (!bannerSlides) return; // Exit if no slider
   const totalBannerSlides = bannerSlides.children.length;
   let bannerCurrent = 0;
 
