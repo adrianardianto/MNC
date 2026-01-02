@@ -28,8 +28,33 @@ function addToCart(name, price, image) {
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
-  alert(`${name} berhasil ditambahkan ke keranjang!`);
+  showToast(`${name} ditambahkan!`, 'success');
   updateCartCount();
+}
+
+// ====== PEMBERITAHUAN TOAST CUSTOM ======
+function showToast(message, type = 'success') {
+    let container = document.querySelector('.toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `
+        <i class="fas fa-check-circle"></i>
+        <span>${message}</span>
+    `;
+
+    container.appendChild(toast);
+
+    // Auto remove
+    setTimeout(() => {
+        toast.classList.add('hide');
+        toast.addEventListener('animationend', () => toast.remove());
+    }, 3000);
 }
 
 // ====== PERBARUI JUMLAH ITEM DI KERANJANG ======
@@ -57,6 +82,30 @@ if (form) {
     });
   }
 
+// ====== FILTER KATEGORI ======
+function filterProducts(category) {
+    // 1. Update button style
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.innerText.toLowerCase().includes(category) || 
+           (category === 'all' && btn.innerText === 'Semua')) {
+            btn.classList.add('active');
+        }
+    });
+
+    // 2. Filter logic
+    const cards = document.querySelectorAll('.product-card');
+    cards.forEach(card => {
+        const itemCat = card.getAttribute('data-category');
+        if (category === 'all' || itemCat === category) {
+            card.style.display = 'block';
+            card.style.animation = 'fadeIn 0.5s ease';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
   form.addEventListener("submit", e => {
     e.preventDefault();
     const user = document.getElementById("username").value.trim();
@@ -71,6 +120,30 @@ if (form) {
 
   displayComments();
 }
+
+// ====== FILTER KATEGORI (Global) ======
+window.filterProducts = function(category) {
+    // 1. Update button style
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.innerText.toLowerCase().includes(category) || 
+           (category === 'all' && btn.innerText === 'Semua')) {
+            btn.classList.add('active');
+        }
+    });
+
+    // 2. Filter logic
+    const cards = document.querySelectorAll('.product-card');
+    cards.forEach(card => {
+        const itemCat = card.getAttribute('data-category');
+        if (category === 'all' || itemCat === category) {
+            card.style.display = 'block';
+            card.style.animation = 'fadeIn 0.5s ease';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+};
 
 // ====== FITUR CHECKOUT & KERANJANG ======
 if (window.location.pathname.includes("checkout.html")) {

@@ -352,7 +352,7 @@ nav a:active {
   margin: 2rem auto;
   padding: 0 1rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Use auto-fill to keep card size consistent */
   gap: 1.5rem;
 }
 
@@ -1381,6 +1381,50 @@ html {
     }
 }
 
+/* ============================================================
+   TOAST NOTIFICATION
+============================================================ */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.toast {
+    background: white;
+    color: #2c3e50;
+    padding: 15px 20px;
+    border-radius: 10px;
+    border-left: 5px solid #9b4922;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    animation: toastSlideIn 0.3s ease forwards;
+    min-width: 250px;
+}
+
+.toast.hide {
+    animation: toastSlideOut 0.3s ease forwards;
+}
+
+.toast i {
+    color: #27ae60;
+    font-size: 1.2rem;
+}
+
+@keyframes toastSlideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes toastSlideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
 @media (max-width: 480px) {
     /* Extra Small Screen Tweaks */
     .hero h1 {
@@ -1392,6 +1436,25 @@ html {
         flex-wrap: wrap;
         justify-content: center;
     }
+}
+
+/* Filter Buttons */
+.filter-btn {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 8px 20px;
+    border-radius: 50px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #555;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: #9b4922;
+    color: white;
+    border-color: #9b4922;
 }
 
 
