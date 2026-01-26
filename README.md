@@ -33,6 +33,15 @@ Website ini dibangun dengan pendekatan desain **Modern Premium** yang menggabung
 
 ---
 
+## 📸 Galeri Website
+
+<p align="center">
+  <img src="screenshots/tampilan_1.png" width="45%" style="margin-right: 10px;" />
+  <img src="screenshots/tampilan_2.png" width="45%" />
+</p>
+
+---
+
 ## 🛠️ Teknologi yang Digunakan
 
 Project ini dibangun menggunakan **Vanilla Web Technologies** murni tanpa framework berat, memastikan performa yang cepat dan ringan.
@@ -47,24 +56,6 @@ Project ini dibangun menggunakan **Vanilla Web Technologies** murni tanpa framew
   - DOM Manipulation.
   - `localStorage` API untuk manajemen data (Keranjang & Postingan Komunitas).
   - `MutationObserver` (untuk elemen dinamis).
-
----
-
-## 📂 Struktur File
-
-```text
-MNC/
-│
-├── index.html          # Halaman Utama (Beranda & Katalog)
-├── checkout.html       # Halaman Keranjang & Pembayaran
-├── komunitas.html      # Halaman Forum Komunitas
-│
-├── style.css           # File Stylesheet Utama (Semua halaman)
-├── script.js           # Logika Utama (Cart, Products, Community, dll)
-├── 3d_ui.js            # Script khusus efek visual 3D
-│
-└── README.md           # Dokumentasi Project
-```
 
 ---
 
